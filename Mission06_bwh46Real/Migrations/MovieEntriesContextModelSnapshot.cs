@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mission06_bwh46.Models;
 
-namespace Mission06_bwh46.Migrations
+namespace Mission06_bwh46Real.Migrations
 {
     [DbContext(typeof(MovieEntriesContext))]
     partial class MovieEntriesContextModelSnapshot : ModelSnapshot
@@ -21,9 +21,8 @@ namespace Mission06_bwh46.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("categoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("director")
                         .IsRequired()
@@ -52,13 +51,15 @@ namespace Mission06_bwh46.Migrations
 
                     b.HasKey("entryId");
 
+                    b.HasIndex("categoryId");
+
                     b.ToTable("Entries");
 
                     b.HasData(
                         new
                         {
                             entryId = 1,
-                            category = "Comedy",
+                            categoryId = 2,
                             director = "Peter Segal",
                             edited = false,
                             rating = "PG-13",
@@ -68,7 +69,7 @@ namespace Mission06_bwh46.Migrations
                         new
                         {
                             entryId = 2,
-                            category = "Action",
+                            categoryId = 3,
                             director = "Ryan Coogler",
                             edited = false,
                             notes = "There is a sequel, and a third movie soon!",
@@ -79,13 +80,78 @@ namespace Mission06_bwh46.Migrations
                         new
                         {
                             entryId = 3,
-                            category = "Romance/Comedy",
+                            categoryId = 2,
                             director = "Glenn Ficarra, John Requa",
                             edited = false,
                             rating = "PG-13",
                             title = "Crazy, Stupid, Love",
                             year = 2011
                         });
+                });
+
+            modelBuilder.Entity("Mission06_bwh46Real.Models.Category", b =>
+                {
+                    b.Property<int>("categoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("catName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("categoryId");
+
+                    b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            categoryId = 1,
+                            catName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            categoryId = 2,
+                            catName = "Comedy"
+                        },
+                        new
+                        {
+                            categoryId = 3,
+                            catName = "Drama"
+                        },
+                        new
+                        {
+                            categoryId = 4,
+                            catName = "Family"
+                        },
+                        new
+                        {
+                            categoryId = 5,
+                            catName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            categoryId = 6,
+                            catName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            categoryId = 7,
+                            catName = "Television"
+                        },
+                        new
+                        {
+                            categoryId = 8,
+                            catName = "VHS"
+                        });
+                });
+
+            modelBuilder.Entity("Mission06_bwh46.Models.MovieEntry", b =>
+                {
+                    b.HasOne("Mission06_bwh46Real.Models.Category", "category")
+                        .WithMany()
+                        .HasForeignKey("categoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

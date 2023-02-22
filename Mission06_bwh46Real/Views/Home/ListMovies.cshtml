@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Movie List";
+}
+<!--this model gives us the ability to grab data from all the movieEntries we have created-->
+@model List<MovieEntry>
+
+<!--this table holds data for every movie entry in the db-->
+<table class="table table-bordered table-striped">
+    <thead class="font-weight-bold">
+        <tr>
+            <td>Category</td>
+            <td>Title</td>
+            <td>Year</td>
+            <td>Director</td>
+            <td>Rating</td>
+            <td>Edited</td>
+            <td>Lent</td>
+            <td>Notes</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var x in Model)
+            {
+        <tr>
+            <td>@x.category.catName</td>
+            <td>@x.title</td>
+            <td>@x.year</td>
+            <td>@x.director</td>
+            <td>@x.rating</td>
+            <td>@x.edited</td>
+            <td>@x.lent</td>
+            <td>@x.notes</td>
+            <!-- these edit and delete buttons appear on every row and will pass the entry
+                id that is connected with the row to edit or delete any entry-->
+            <td><a asp-controller="Home" asp-action="Edit" asp-route-entryId="@x.entryId">Edit</a></td>
+            <td><a asp-controller="Home" asp-action="Delete" asp-route-entryId="@x.entryId">Delete</a></td>
+        </tr>
+            }
+    </tbody>
+</table>

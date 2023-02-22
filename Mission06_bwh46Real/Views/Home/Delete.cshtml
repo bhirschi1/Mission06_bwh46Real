@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "Delete Record";
+}
+
+<!--This will allow us to use the model of MovieEntry and grab data from the table for each entry -->
+@model MovieEntry
+
+
+<h2>Confirm Before You Delete!</h2>
+<h4>Are you sure you want to delete @Model.title?</h4>
+
+<!--This action coincides with the Delete action in the HomeController-->
+<form method="post" asp-controller="Home" asp-action="Delete">
+    <button type="submit">Delete</button>
+    <a asp-controller="Home" asp-action="ListMovies" class="btn btn-primary">Cancel</a>
+    <!--Must include the hidden input for entryId so we can identify which entry we want to delete-->
+    <input type="hidden" asp-for="entryId" />
+</form>

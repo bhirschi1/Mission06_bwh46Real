@@ -58,7 +58,7 @@ namespace Mission06_bwh46
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{entryId?}"); // use the entryId later on in the asp-route stuff in the edit and delete buttons
             });
         }
     }
